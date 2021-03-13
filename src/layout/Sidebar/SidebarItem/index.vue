@@ -1,11 +1,14 @@
 <template>
   <router-link :to="routeItem.path">
-    <el-menu-item>{{ getRouteTitle(routeItem) }}</el-menu-item>
+    <el-menu-item>
+      <menu-item :title="getRouteTitle(routeItem)" />
+    </el-menu-item>
   </router-link>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import MenuItem from '@/layout/Sidebar/MenuItem/index.vue'
 export default defineComponent({
   props: {
     routeItem: {
@@ -13,6 +16,7 @@ export default defineComponent({
       required: true
     }
   },
+  components: { MenuItem },
   setup() {
     function getRouteTitle(item: any) {
       if (item.children[0]) {
