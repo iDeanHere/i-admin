@@ -1,7 +1,11 @@
-<script lang="ts">
-import { h } from 'vue'
+<script lang="tsx">
 const MenuItem = (props: any) => {
-  return h('div', { class: 'test' }, props.title)
+  const { title } = props
+  const vnodes = []
+  if (title) {
+    vnodes.push(<span v-slots="title">{title}</span>)
+  }
+  return vnodes
 }
 MenuItem.props = {
   title: {
