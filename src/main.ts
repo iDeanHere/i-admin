@@ -8,6 +8,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import '@/styles/global.scss'
+
 import IconSvg from '@/components/IconSvg/index.vue'
 import '@/icons'
 
