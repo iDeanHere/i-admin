@@ -4,6 +4,7 @@
     <div class="dashboard-text">
       roles: <span v-for="role in roles" :key="role">{{ role }}</span>
     </div>
+    <router-link :to="{ path: '/about', name: 'About' }">About</router-link>
   </div>
 </template>
 

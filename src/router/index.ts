@@ -14,6 +14,18 @@ const routes: Array<RouteRecordRaw> = [
         meta: { title: 'Dashboard' }
       }
     ]
+  },
+  {
+    path: '/about',
+    component: Layout,
+    children: [
+      {
+        path: '',
+        name: 'About',
+        component: () => import('@/views/About.vue'),
+        meta: { title: 'About' }
+      }
+    ]
   }
   // {
   //   path: '/about',
