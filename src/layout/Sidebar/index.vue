@@ -11,9 +11,11 @@
         :unique-opened="false"
         mode="vertical"
       >
-        <el-menu-item v-for="route in routes" :key="route.path">{{
-          getRouteTitle(route)
-        }}</el-menu-item>
+        <sidebar-item
+          v-for="route in routes"
+          :key="route.path"
+          :routeItem="route"
+        />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -22,8 +24,10 @@
 <script lang="ts">
 import { computed, defineComponent, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import SidebarItem from '@/layout/Sidebar/SidebarItem/index.vue'
 const Sidebar = defineComponent({
   name: 'Sidebar',
+  components: { SidebarItem },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -45,22 +49,13 @@ const Sidebar = defineComponent({
     const routes = computed(() => {
       return router.options.routes
     })
-    function getRouteTitle(item: any) {
-      if (item.children[0]) {
-        const child = item.children[0]
-        if (child.meta && child.meta.title) {
-          return child.meta.title
-        }
-      }
-    }
+
     return {
       routes,
       showLogo,
       variables,
       activeMenu,
-      isCollapse,
-      // func
-      getRouteTitle
+      isCollapse
     }
   }
 })
