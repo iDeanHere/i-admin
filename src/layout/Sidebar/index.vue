@@ -25,16 +25,15 @@
 import { computed, defineComponent, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import SidebarItem from '@/layout/Sidebar/SidebarItem/index.vue'
+import Variables from '@/styles/variables.scss'
 const Sidebar = defineComponent({
   name: 'Sidebar',
   components: { SidebarItem },
   setup() {
     const route = useRoute()
     const router = useRouter()
-    const variables = reactive({
-      menuBgColor: '#304156',
-      menuTextColor: '#bfcbd9',
-      menuActiveTextColor: '#f4f4f5'
+    const variables = computed(() => {
+      return Variables
     })
     const showLogo = computed(() => {
       return true
