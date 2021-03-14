@@ -1,40 +1,56 @@
 <template>
-  <router-link :to="routeItem.path">
-    <el-menu-item>
-      <menu-item :title="title" :icon="icon" />
-    </el-menu-item>
-  </router-link>
+  <template v-if="hasOneShowingChild(routeItem.children, routeItem)">
+    <router-link :to="resolvePath(theOnlyChild.path)">
+      <el-menu-item :index="resolvePath(theOnlyChild.path)">
+        <menu-item
+          :title="theOnlyChild.meta.title"
+          :icon="theOnlyChild.meta.icon"
+        />
+      </el-menu-item>
+    </router-link>
+  </template>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, unref } from 'vue'
+import path from 'path'
+import { defineComponent, ref, toRefs } from 'vue'
 import MenuItem from '@/layout/Sidebar/MenuItem/index.vue'
 export default defineComponent({
   props: {
     routeItem: {
       type: Object,
       required: true
+    },
+    basePath: {
+      type: String,
+      default: ''
     }
   },
   components: { MenuItem },
   setup(props) {
-    const routeItem = unref(props.routeItem)
-    const title = ref('')
-    const icon = ref('')
-    onMounted(() => {
-      if (routeItem.children[0]) {
-        const child = routeItem.children[0]
-        if (child.meta) {
-          if (child.meta.title) {
-            title.value = child.meta.title
-          }
-          if (child.meta.icon) {
-            icon.value = child.meta.icon
-          }
-        }
+    const { basePath } = toRefs(props)
+    const theOnlyChild = ref()
+    function hasOneShowingChild(children: any[], parent: any) {
+      const showingChildren = children.filter(child => {
+        theOnlyChild.value = child
+        return true
+      })
+      if (showingChildren.length === 1) {
+        return true
       }
-    })
-    return { title, icon }
+      return false
+    }
+    function resolvePath(routePath: string) {
+      console.log(basePath.value)
+
+      return path.resolve(basePath.value, routePath)
+    }
+    return {
+      theOnlyChild,
+      // func
+      hasOneShowingChild,
+      resolvePath
+    }
   }
 })
 </script>

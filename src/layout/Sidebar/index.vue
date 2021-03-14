@@ -15,6 +15,7 @@
           v-for="route in routes"
           :key="route.path"
           :routeItem="route"
+          :base-path="route.path"
         />
       </el-menu>
     </el-scrollbar>
@@ -22,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive } from 'vue'
+import { computed, defineComponent, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import SidebarItem from '@/layout/Sidebar/SidebarItem/index.vue'
 import Variables from '@/styles/variables.scss'
@@ -39,8 +40,11 @@ const Sidebar = defineComponent({
       return true
     })
     const activeMenu = computed(() => {
-      const { meta, path } = route
-      return meta.activeMenu !== null ? meta.activeMenu : path
+      const { meta, path } = toRefs(route)
+      if (meta.value.activeMenu) {
+        return meta.value.activeMenu
+      }
+      return path.value
     })
     const isCollapse = computed(() => {
       return false
