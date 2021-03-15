@@ -35,10 +35,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-// TODO 后续引入 variables.scss
-$sideBarWidth: 210px;
-$menuBgColor: #304156;
+@import '@/styles/mixin.scss';
+@import '@/styles/variables.scss';
+
 .app-wrapper {
+  @include clear-fix;
   position: relative;
   height: 100%;
   width: 100%;
@@ -56,19 +57,19 @@ $menuBgColor: #304156;
   position: fixed;
   top: 0;
   right: 0;
-  width: calc(100% - #{$sideBarWidth});
+  width: calc(100% - #{$sidebarWidth});
   transition: width 0.28s;
   z-index: 9;
 }
 .main-container {
   position: relative;
   min-height: 100%;
-  margin-left: 180px;
+  margin-left: $sidebarWidth;
   transition: margin-left 0.28s;
 }
 .sidebar-container {
   position: fixed;
-  width: 180px !important;
+  width: $sidebarWidth !important;
   height: 100%;
   top: 0;
   bottom: 0;
