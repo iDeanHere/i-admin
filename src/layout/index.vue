@@ -61,26 +61,4 @@ export default defineComponent({
   transition: width 0.28s;
   z-index: 9;
 }
-.main-container {
-  position: relative;
-  min-height: 100%;
-  margin-left: $sidebarWidth;
-  transition: margin-left 0.28s;
-}
-.sidebar-container {
-  position: fixed;
-  width: $sidebarWidth !important;
-  height: 100%;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  background-color: $menuBgColor;
-  font-size: 0px;
-  transition: width 0.28s;
-  z-index: 1001;
-  overflow: hidden;
-  .scrollbar-wrapper {
-    overflow-x: hidden !important;
-  }
-}
 </style>
