@@ -1,6 +1,5 @@
 <template>
-  <h1>This is an about page</h1>
-  <router-link :to="{ path: '/dashboard', name: 'Dashboard' }"
-    >Dashboard</router-link
-  >
+  <div class="app-container">
+    <h1>This is an about page</h1>
+  </div>
 </template>
