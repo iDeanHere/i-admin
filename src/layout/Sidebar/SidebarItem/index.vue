@@ -1,11 +1,17 @@
 <template>
   <template v-if="hasOneShowingChild(routeItem.children, routeItem)">
-    <router-link :to="resolvePath(theOnlyChild.path)">
+    <router-link v-if="theOnlyChild.meta" :to="resolvePath(theOnlyChild.path)">
       <el-menu-item :index="resolvePath(theOnlyChild.path)">
-        <menu-item
-          :title="theOnlyChild.meta.title"
-          :icon="theOnlyChild.meta.icon"
-        />
+        <template v-if="theOnlyChild.meta.icon">
+          <i
+            v-if="theOnlyChild.meta.icon.includes('el-icon')"
+            class="{[icon, 'sub-el-icon']}"
+          />
+          <icon-svg v-else :icon-name="theOnlyChild.meta.icon" />
+        </template>
+        <template v-if="theOnlyChild.meta.title" #title>
+          {{ theOnlyChild.meta.title }}</template
+        >
       </el-menu-item>
     </router-link>
   </template>
@@ -14,7 +20,6 @@
 <script lang="ts">
 import path from 'path'
 import { defineComponent, ref, toRefs } from 'vue'
-import MenuItem from '@/layout/Sidebar/MenuItem/index.vue'
 export default defineComponent({
   props: {
     routeItem: {
@@ -26,7 +31,6 @@ export default defineComponent({
       default: ''
     }
   },
-  components: { MenuItem },
   setup(props) {
     const { basePath } = toRefs(props)
     const theOnlyChild = ref()

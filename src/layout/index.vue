@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper">
+  <div class="app-wrapper hide-sidebar">
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">

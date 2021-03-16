@@ -47,7 +47,7 @@ const Sidebar = defineComponent({
       return path.value
     })
     const isCollapse = computed(() => {
-      return false
+      return true
     })
     const routes = computed(() => {
       return router.options.routes
