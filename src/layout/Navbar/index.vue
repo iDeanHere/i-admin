@@ -92,7 +92,7 @@ export default Navbar
       font-size: 18px;
       color: #5a5e66;
     }
-    /deep/ .avatar-container {
+    :deep() .avatar-container {
       margin-right: 30px;
       .avatar-wrapper {
         position: relative;
