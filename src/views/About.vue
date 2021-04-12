@@ -4,10 +4,15 @@
   </div>
 </template>
 <script>
+import { useStore } from 'vuex'
+import { onMounted } from 'vue'
 export default {
-  created() {
-    this.$store.commit('increment')
-    console.log('count: ' + this.$store.state.count)
+  setup() {
+    const store = useStore()
+    onMounted(() => {
+      store.commit('increment')
+      console.log('count: ' + store.state.count)
+    })
   }
 }
 </script>
