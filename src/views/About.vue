@@ -4,11 +4,10 @@
   </div>
 </template>
 <script>
-import store from '@/store'
 export default {
   created() {
-    store.commit('increment')
-    console.log('count: ' + store.state.count)
+    this.$store.commit('increment')
+    console.log('count: ' + this.$store.state.count)
   }
 }
 </script>
