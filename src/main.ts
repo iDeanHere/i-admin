@@ -6,7 +6,7 @@ import 'element-plus/lib/theme-chalk/index.css'
 
 import App from './App.vue'
 import router from './router'
-import store from './store'
+import { store, key } from './store'
 
 import '@/styles/global.scss'
 
@@ -14,7 +14,7 @@ import IconSvg from '@/components/IconSvg/index.vue'
 import '@/icons'
 
 createApp(App)
-  .use(store)
+  .use(store, key)
   .use(router)
   .use(ElementPlus)
   .component('icon-svg', IconSvg)
