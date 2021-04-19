@@ -1,36 +1,17 @@
 import { InjectionKey } from '@vue/runtime-core'
-import {
-  createStore,
-  MutationTree,
-  ActionTree,
-  Store,
-  useStore as useStoreBase
-} from 'vuex'
+import { createStore, useStore as useStoreBase, Store, ModuleTree } from 'vuex'
+import AppModule, { IAppState } from './modules/app'
 
-interface IGlobalState {
-  count: number
+export interface IGlobalState {
+  app: IAppState
 }
 
-const state: IGlobalState = {
-  count: 0
-}
-
-const mutations: MutationTree<IGlobalState> = {
-  INCREMENT: (state: IGlobalState) => {
-    state.count++
-  }
-}
-
-const actions: ActionTree<IGlobalState, unknown> = {
-  increment({ commit }) {
-    commit('INCREMENT')
-  }
+const modules: ModuleTree<IGlobalState> = {
+  app: AppModule
 }
 
 export const store = createStore<IGlobalState>({
-  state,
-  mutations,
-  actions
+  modules
 })
 
 export const key: InjectionKey<Store<IGlobalState>> = Symbol('Global State')

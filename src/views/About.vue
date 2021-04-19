@@ -10,10 +10,11 @@ export default defineComponent({
   setup() {
     const store = useStore()
     onMounted(() => {
-      store.commit('INCREMENT')
-      console.log('count: ' + store.state.count)
-      store.dispatch('increment')
-      console.log('count: ' + store.state.count)
+      console.log(store.state.app)
+      store.commit('app/INCREMENT')
+      console.log('count: ' + store.state.app.count)
+      store.dispatch('app/increment')
+      console.log('count: ' + store.state.app.count)
     })
   }
 })
