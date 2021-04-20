@@ -25,12 +25,14 @@
 <script lang="ts">
 import { computed, defineComponent, toRefs } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useStore } from '@/store'
 import SidebarItem from '@/layout/Sidebar/SidebarItem/index.vue'
 import Variables from '@/styles/variables.scss'
 const Sidebar = defineComponent({
   name: 'Sidebar',
   components: { SidebarItem },
   setup() {
+    const store = useStore()
     const route = useRoute()
     const router = useRouter()
     const variables = computed(() => {
@@ -46,9 +48,7 @@ const Sidebar = defineComponent({
       }
       return path.value
     })
-    const isCollapse = computed(() => {
-      return true
-    })
+    const isCollapse = computed(() => !store.getters.sidebar.isOpen)
     const routes = computed(() => {
       return router.options.routes
     })

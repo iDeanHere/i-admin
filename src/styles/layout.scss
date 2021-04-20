@@ -40,6 +40,9 @@
     border: none;
     height: 100%;
     width: 100% !important;
+    .el-menu-item:hover {
+      background-color: $menuItemHoverBgColor !important;
+    }
   }
 }
 
@@ -50,6 +53,13 @@
 
   .sidebar-container {
     width: $hiddenSidebarWidth !important;
+  }
+}
+
+.without-animation {
+  .main-container,
+  .sidebar-container {
+    transition: none;
   }
 }
 

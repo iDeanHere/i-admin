@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <hamburger
-      :is-active="tmpSidebarOpened"
+      :is-active="sidebar.isOpen"
       @toggle-click="toggleSidebar"
       class="hamburger-container"
     />
@@ -30,9 +30,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import Hamburger from '@/layout/Navbar/Hamburger/index.vue'
 import Breadcrumb from '@/layout/Navbar/Breadcrumb/index.vue'
+import { useStore } from '@/store'
 
 const Navbar = defineComponent({
   name: 'Navbar',
@@ -41,14 +42,15 @@ const Navbar = defineComponent({
     Breadcrumb
   },
   setup() {
-    const tmpSidebarOpened = ref(false)
+    const store = useStore()
+    const sidebar = computed(() => store.getters.sidebar)
     const defaultAvatarUrl = require('@/assets/avatar-default.jpg')
     function toggleSidebar() {
-      tmpSidebarOpened.value = !tmpSidebarOpened.value
+      store.dispatch('app/toggleSidebarCollapse')
     }
     return {
       defaultAvatarUrl,
-      tmpSidebarOpened,
+      sidebar,
       // func
       toggleSidebar
     }

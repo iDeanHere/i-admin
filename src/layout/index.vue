@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper hide-sidebar">
+  <div :class="dynamicClasses" class="app-wrapper">
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
@@ -12,6 +12,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
+import { useStore } from '@/store'
 import AppMain from '@/layout/AppMain/index.vue'
 import Sidebar from '@/layout/Sidebar/index.vue'
 import Navbar from '@/layout/Navbar/index.vue'
@@ -24,10 +25,19 @@ export default defineComponent({
     Navbar
   },
   setup() {
+    const store = useStore()
+    const sidebar = computed(() => store.getters.sidebar)
+    const dynamicClasses = computed(() => {
+      return {
+        'hide-sidebar': !sidebar.value.isOpen,
+        'without-animation': sidebar.value.withoutAnimation
+      }
+    })
     const fixedHeader = computed(() => {
       return false
     })
     return {
+      dynamicClasses,
       fixedHeader
     }
   }
