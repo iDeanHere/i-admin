@@ -5,16 +5,18 @@
 </template>
 <script lang="ts">
 import { useStore } from '@/store'
-import { defineComponent, onMounted } from 'vue'
+import { computed, defineComponent, onMounted } from 'vue'
 export default defineComponent({
   setup() {
     const store = useStore()
+    const sidebar = computed(() => store.getters.sidebar)
     onMounted(() => {
-      console.log(store.state.app)
-      store.commit('app/INCREMENT')
-      console.log('count: ' + store.state.app.count)
-      store.dispatch('app/increment')
-      console.log('count: ' + store.state.app.count)
+      store.dispatch('app/toggleSidebarCollapse')
+      console.log('sidebar isOpen: ' + sidebar.value.isOpen)
+      store.dispatch('app/toggleSidebarCollapse')
+      console.log('sidebar isOpen: ' + sidebar.value.isOpen)
+      store.dispatch('app/collapseSidebar')
+      console.log('sidebar isOpen: ' + sidebar.value.isOpen)
     })
   }
 })
