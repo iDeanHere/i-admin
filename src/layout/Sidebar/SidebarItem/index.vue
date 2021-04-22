@@ -1,19 +1,24 @@
 <template>
-  <template v-if="hasOneShowingChild(routeItem.children, routeItem)">
-    <router-link v-if="theOnlyChild.meta" :to="resolvePath(theOnlyChild.path)">
-      <el-menu-item :index="resolvePath(theOnlyChild.path)">
-        <template v-if="theOnlyChild.meta.icon">
-          <i
-            v-if="theOnlyChild.meta.icon.includes('el-icon')"
-            class="{[icon, 'sub-el-icon']}"
-          />
-          <icon-svg v-else :icon-name="theOnlyChild.meta.icon" />
-        </template>
-        <template v-if="theOnlyChild.meta.title" #title>
-          {{ theOnlyChild.meta.title }}</template
-        >
-      </el-menu-item>
-    </router-link>
+  <template v-if="!routeItem.meta || !routeItem.meta.hidden">
+    <template v-if="hasOneShowingChild(routeItem.children, routeItem)">
+      <router-link
+        v-if="theOnlyChild.meta"
+        :to="resolvePath(theOnlyChild.path)"
+      >
+        <el-menu-item :index="resolvePath(theOnlyChild.path)">
+          <template v-if="theOnlyChild.meta.icon">
+            <i
+              v-if="theOnlyChild.meta.icon.includes('el-icon')"
+              class="{[icon, 'sub-el-icon']}"
+            />
+            <icon-svg v-else :icon-name="theOnlyChild.meta.icon" />
+          </template>
+          <template v-if="theOnlyChild.meta.title" #title>
+            {{ theOnlyChild.meta.title }}</template
+          >
+        </el-menu-item>
+      </router-link>
+    </template>
   </template>
 </template>
 
