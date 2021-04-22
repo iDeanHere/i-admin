@@ -42,8 +42,10 @@
     "eslint-plugin-vue": "^7.0.0-0",
     "node-sass": "^5.0.0",
     "sass-loader": "^10.1.1",
+    "style-resources-loader": "^1.4.1",
     "svg-sprite-loader": "^6.0.0",
     "typescript": "~3.9.3",
+    "vue-cli-plugin-style-resources-loader": "~0.1.5",
     "vue-jest": "^5.0.0-0"
   }
 }

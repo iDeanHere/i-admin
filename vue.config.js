@@ -6,7 +6,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-  chainWebpack(config) {
+  chainWebpack: config => {
     config.module
       .rule('svg')
       .exclude.add(resolve('src/icons'))
@@ -20,5 +20,15 @@ module.exports = {
       .loader('svg-sprite-loader')
       .options({ symbolId: 'icon-[name]' })
       .end()
+  },
+
+  pluginOptions: {
+    'style-resources-loader': {
+      preProcessor: 'scss',
+      patterns: [
+        path.resolve(__dirname, './src/styles/variables.scss'),
+        path.resolve(__dirname, './src/styles/mixin.scss')
+      ]
+    }
   }
 }
