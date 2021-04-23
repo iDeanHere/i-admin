@@ -1,52 +1,114 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" auto-complete label-position="left">
+    <el-form
+      :model="loginForm"
+      :rules="loginFormRules"
+      class="login-form"
+      autocomplete="on"
+      label-position="left"
+    >
       <div class="logo">
         <h1>i-admin</h1>
+        <h3>(remake vue-admin-template)</h3>
       </div>
-      <el-form-item>
+      <el-form-item prop="username">
         <span class="icon-wrapper">
           <icon-svg icon-name="user" />
         </span>
         <el-input
+          v-model="loginForm.username"
           placeholder="Username"
           name="username"
           type="text"
-          autocomplete
+          autocomplete="on"
           tabindex="1"
         />
       </el-form-item>
-      <el-form-item>
+      <el-form-item prop="password">
         <span class="icon-wrapper">
           <icon-svg icon-name="password" />
         </span>
         <el-input
+          v-model="loginForm.password"
           placeholder="Password"
           name="password"
-          type="password"
-          autocomplete
+          :type="passwordType"
+          :key="passwordType"
+          autocomplete="on"
           tabindex="2"
+          @keyup.enter="handleLogin"
         />
-        <span class="show-pwd">
-          <icon-svg icon-name="eye" />
+        <span class="show-pwd" @click="showPwd">
+          <icon-svg
+            :icon-name="passwordType === 'password' ? 'eye' : 'eye-open'"
+          />
         </span>
       </el-form-item>
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px;"
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width: 100%; margin-bottom: 30px;"
+        @click.prevent="handleLogin"
         >Login</el-button
       >
       <div class="tips">
-        <span>username: admin</span>
-        <span>password: admin</span>
+        <span>tips-1</span>
+        <span>tips-2</span>
       </div>
     </el-form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, reactive, ref } from 'vue'
 export default defineComponent({
+  name: 'Login',
   setup() {
-    return {}
+    const loading = ref(false)
+    const passwordType = ref('password')
+    const redirect = ref(undefined)
+
+    const loginForm = reactive({ username: '', password: '' })
+    onMounted(() => {
+      loginForm.username = 'admin'
+      loginForm.password = '111111'
+    })
+    const loginFormRules = reactive({
+      username: [
+        {
+          required: true,
+          trigger: 'blur',
+          type: 'enum',
+          enum: ['admin', 'editor'],
+          message: 'Username is unavailable.'
+        }
+      ],
+      password: [
+        {
+          required: true,
+          min: 6,
+          trigger: 'blur',
+          message: 'The password should more than 6 digits.'
+        }
+      ]
+    })
+
+    function handleLogin() {
+      //
+    }
+
+    function showPwd() {
+      //
+    }
+    return {
+      loginForm,
+      loginFormRules,
+      passwordType,
+      loading,
+      // fnc
+      handleLogin,
+      showPwd
+    }
   }
 })
 </script>
@@ -124,9 +186,6 @@ export default defineComponent({
   .logo {
     text-align: center;
     color: $loginColor_lightGray;
-    h1 {
-      margin: 0 auto 40px auto;
-    }
   }
 
   .show-pwd {

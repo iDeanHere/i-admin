@@ -1,4 +1,6 @@
 /**
+ * @deprecated async-validator 已可以完成简单的校验工作，如后续有复杂校验再使用
+ *
  * 姑且先用来校验用户名是否是预设的，后续可能会添加用户名的格式、长度、特殊字符等的校验
  *
  * @param username 登录用户名
@@ -19,6 +21,8 @@ export function validateUsername(username: string) {
 }
 
 /**
+ * @deprecated async-validator 已可以完成简单的校验工作，如后续有复杂校验再使用
+ *
  * 目前先校验密码的长度
  *
  * @param password 登录密码
