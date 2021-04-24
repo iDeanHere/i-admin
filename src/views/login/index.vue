@@ -1,6 +1,7 @@
 <template>
   <div class="login-container">
     <el-form
+      ref="formRef"
       :model="loginForm"
       :rules="loginFormRules"
       class="login-form"
@@ -16,6 +17,7 @@
           <icon-svg icon-name="user" />
         </span>
         <el-input
+          ref="usernameRef"
           v-model="loginForm.username"
           placeholder="Username"
           name="username"
@@ -29,6 +31,7 @@
           <icon-svg icon-name="password" />
         </span>
         <el-input
+          ref="passwordRef"
           v-model="loginForm.password"
           placeholder="Password"
           name="password"
@@ -52,18 +55,25 @@
         >Login</el-button
       >
       <div class="tips">
-        <span>tips-1</span>
-        <span>tips-2</span>
+        <span>{{ tips }}</span>
       </div>
     </el-form>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref } from 'vue'
+import { defineComponent, nextTick, onMounted, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 export default defineComponent({
   name: 'Login',
   setup() {
+    const router = useRouter()
+
+    const formRef: any = ref(null)
+    const usernameRef: any = ref(null)
+    const passwordRef: any = ref(null)
+
+    const tips = ref('')
     const loading = ref(false)
     const passwordType = ref('password')
     const redirect = ref(undefined)
@@ -72,6 +82,7 @@ export default defineComponent({
     onMounted(() => {
       loginForm.username = 'admin'
       loginForm.password = '111111'
+      usernameRef.value.focus()
     })
     const loginFormRules = reactive({
       username: [
@@ -94,17 +105,38 @@ export default defineComponent({
     })
 
     function handleLogin() {
-      //
+      formRef.value.validate((valid: any) => {
+        if (valid) {
+          loading.value = true
+          setTimeout(() => {
+            loading.value = false
+            router.push({ path: redirect.value || '/' })
+          }, 2500)
+        } else {
+          tips.value = 'login validate error'
+          console.log(tips.value)
+          return false
+        }
+      })
     }
 
-    function showPwd() {
-      //
+    async function showPwd() {
+      passwordType.value = passwordType.value === 'password' ? '' : 'password'
+      await nextTick(() => {
+        passwordRef.value.focus()
+      })
     }
+
     return {
       loginForm,
       loginFormRules,
       passwordType,
       loading,
+      tips,
+      // refs
+      formRef,
+      usernameRef,
+      passwordRef,
       // fnc
       handleLogin,
       showPwd
