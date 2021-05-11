@@ -6,22 +6,21 @@ export interface IUserState {
   token: string
   username: string
   avatar: string
+  intro: string
+  email: string
+  roles: string[]
 }
 
-const getDefaultState = () => {
-  return {
-    token: getToken() || '',
-    username: '',
-    avatar: ''
-  }
+const state: IUserState = {
+  token: getToken() || '',
+  username: '',
+  avatar: '',
+  intro: '',
+  email: '',
+  roles: []
 }
-
-const state: IUserState = getDefaultState()
 
 const mutations: MutationTree<IUserState> = {
-  RESET_STATE: state => {
-    Object.assign(state, getDefaultState())
-  },
   SET_TOKEN: (state, token: string) => {
     state.token = token
     setToken(token)
@@ -31,6 +30,15 @@ const mutations: MutationTree<IUserState> = {
   },
   SET_AVATAR: (state, avatar: string) => {
     state.avatar = avatar
+  },
+  SET_INTRO: (state, intro: string) => {
+    state.intro = intro
+  },
+  SET_EMAIL: (state, email: string) => {
+    state.email = email
+  },
+  SET_ROLES: (state, roles: string[]) => {
+    state.roles = roles
   }
 }
 
@@ -44,22 +52,29 @@ const actions: ActionTree<IUserState, unknown> = {
   getInfo: async ({ commit, state }) => {
     const { data } = await getInfo(state.token)
     if (!data) {
-      return Promise.reject('Verification failed, please login again.')
+      return Promise.reject(
+        new Error('Verification failed, please login again.')
+      )
     }
-    const { username, avatar } = data
+    const { username, avatar, intro, email, roles } = data
     commit('SET_USERNAME', username)
     commit('SET_AVATAR', avatar)
+    commit('SET_INTRO', intro)
+    commit('SET_EMAIL', email)
+    commit('SET_ROLES', roles)
   },
   logout: ({ commit }) => {
     logout().then(() => {
-      clearToken() // must remove token first
+      commit('SET_TOKEN', '')
+      commit('SET_ROLES', [])
+      clearToken()
       // resetRouter() // TODO
-      commit('RESET_STATE')
     })
   },
   resetToken: ({ commit }) => {
-    clearToken() // must remove token first
-    commit('RESET_STATE')
+    commit('SET_TOKEN', '')
+    commit('SET_ROLES', [])
+    clearToken()
   }
 }
 
