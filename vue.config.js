@@ -30,5 +30,21 @@ module.exports = {
         path.resolve(__dirname, './src/styles/mixin.scss')
       ]
     }
+  },
+  devServer: {
+    open: false,
+    host: 'localhost',
+    port: 8080,
+    https: false,
+    hotOnly: true,
+    proxy: {
+      '/api/dev': {
+        target: 'http://localhost:8088',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api/dev': ''
+        }
+      }
+    }
   }
 }
