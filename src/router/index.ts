@@ -1,4 +1,9 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import {
+  Router,
+  createRouter,
+  createWebHistory,
+  RouteRecordRaw
+} from 'vue-router'
 import Layout from '@/layout/index.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -42,9 +47,18 @@ const routes: Array<RouteRecordRaw> = [
   // }
 ]
 
-const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes
-})
+const doCreateRouter = (): Router => {
+  return createRouter({
+    history: createWebHistory(process.env.BASE_URL),
+    routes
+  })
+}
+
+const router: Router = doCreateRouter()
+
+export function resetRouter() {
+  const newRouter: Router = doCreateRouter()
+  router.options.routes = newRouter.options.routes // FIXME router.matcher?
+}
 
 export default router

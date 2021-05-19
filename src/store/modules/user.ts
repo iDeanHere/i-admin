@@ -1,6 +1,7 @@
+import { ActionTree, MutationTree } from 'vuex'
+import { resetRouter } from '@/router'
 import { getInfo, login, logout } from '@/api/user'
 import { getToken, setToken, clearToken } from '@/utils/cookies'
-import { ActionTree, MutationTree } from 'vuex'
 
 export interface IUserState {
   token: string
@@ -44,9 +45,7 @@ const mutations: MutationTree<IUserState> = {
 
 const actions: ActionTree<IUserState, unknown> = {
   login: async ({ commit }, formData) => {
-    console.log(formData)
     const { data } = await login(formData)
-    console.log(data)
     commit('SET_TOKEN', data.token)
   },
   getInfo: async ({ commit, state }) => {
@@ -63,13 +62,15 @@ const actions: ActionTree<IUserState, unknown> = {
     commit('SET_EMAIL', email)
     commit('SET_ROLES', roles)
   },
-  logout: ({ commit }) => {
-    logout().then(() => {
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      clearToken()
-      // resetRouter() // TODO
-    })
+  logout: async ({ commit }) => {
+    if (state.token === '') {
+      throw Error('Logout: token is undefined!')
+    }
+    await logout()
+    commit('SET_TOKEN', '')
+    commit('SET_ROLES', [])
+    clearToken()
+    resetRouter()
   },
   resetToken: ({ commit }) => {
     commit('SET_TOKEN', '')
