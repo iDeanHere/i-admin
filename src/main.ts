@@ -6,6 +6,7 @@ import 'element-plus/lib/theme-chalk/index.css'
 
 import App from './App.vue'
 import router from './router'
+import '@/router/interceptor'
 import { store, key } from './store'
 
 import '@/styles/global.scss'
