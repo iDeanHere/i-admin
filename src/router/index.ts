@@ -49,8 +49,15 @@ const routes: Array<RouteRecordRaw> = [
 
 const doCreateRouter = (): Router => {
   return createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes
+    history: createWebHistory(process.env.PUBLIC_PATH),
+    routes,
+    scrollBehavior: (to: any, from: any, savedPosition: any) => {
+      if (savedPosition) {
+        return savedPosition
+      } else {
+        return { left: 0, top: 0 }
+      }
+    }
   })
 }
 
