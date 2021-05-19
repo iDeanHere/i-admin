@@ -64,10 +64,12 @@
 <script lang="ts">
 import { defineComponent, nextTick, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from '@/store'
 export default defineComponent({
   name: 'Login',
   setup() {
     const router = useRouter()
+    const store = useStore()
 
     const formRef: any = ref(null)
     const usernameRef: any = ref(null)
@@ -109,8 +111,15 @@ export default defineComponent({
         if (valid) {
           loading.value = true
           setTimeout(() => {
-            loading.value = false
-            router.push({ path: redirect.value || '/' })
+            store
+              .dispatch('user/login', loginForm)
+              .then(() => {
+                router.push({ path: redirect.value || '/' })
+                loading.value = false
+              })
+              .catch(() => {
+                loading.value = false
+              })
           }, 2500)
         } else {
           tips.value = 'login validate error'

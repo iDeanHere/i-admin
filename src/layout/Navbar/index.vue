@@ -30,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent } from 'vue'
 import Hamburger from '@/layout/Navbar/Hamburger/index.vue'
 import Breadcrumb from '@/layout/Navbar/Breadcrumb/index.vue'
 import { useStore } from '@/store'
@@ -44,7 +44,7 @@ const Navbar = defineComponent({
   setup() {
     const store = useStore()
     const sidebar = computed(() => store.getters.sidebar)
-    const defaultAvatarUrl = require('@/assets/avatar-default.jpg')
+    const defaultAvatarUrl = computed(() => store.getters.avatar)
     function toggleSidebar() {
       store.dispatch('app/toggleSidebarCollapse')
     }
