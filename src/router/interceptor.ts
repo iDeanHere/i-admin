@@ -3,14 +3,14 @@ import { store } from '@/store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import { ElMessage } from 'element-plus'
-import { getToken } from '@/utils/cookies'
 import settings from '@/settings'
+import permissions from '@/utils/permission'
 
 NProgress.configure({ showSpinner: false })
 
 const whiteList: string[] = ['/login']
 
-router.beforeEach(async (to, from, next) => {
+router.beforeResolve(async (to, _, next) => {
   NProgress.start()
 
   document.title = ((): string => {
@@ -22,15 +22,13 @@ router.beforeEach(async (to, from, next) => {
     return `${mainTitle}`
   })()
 
-  const tokenExist = getToken()
-  if (tokenExist) {
+  if (permissions.hasToken()) {
     if (to.path === '/login') {
       // if is logged in, redirect to the dashboard
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.username
-      if (hasGetUserInfo) {
+      if (permissions.hasRoles()) {
         next()
       } else {
         try {

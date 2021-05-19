@@ -31,6 +31,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import Hamburger from '@/layout/Navbar/Hamburger/index.vue'
 import Breadcrumb from '@/layout/Navbar/Breadcrumb/index.vue'
 import { useStore } from '@/store'
@@ -42,17 +43,24 @@ const Navbar = defineComponent({
     Breadcrumb
   },
   setup() {
+    const route = useRoute()
+    const router = useRouter()
     const store = useStore()
     const sidebar = computed(() => store.getters.sidebar)
     const defaultAvatarUrl = computed(() => store.getters.avatar)
     function toggleSidebar() {
       store.dispatch('app/toggleSidebarCollapse')
     }
+    async function logout() {
+      await store.dispatch('user/logout')
+      router.push(`/login?redirect=${route.fullPath}`)
+    }
     return {
       defaultAvatarUrl,
       sidebar,
       // func
-      toggleSidebar
+      toggleSidebar,
+      logout
     }
   }
 })
