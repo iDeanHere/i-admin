@@ -62,12 +62,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, onMounted, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import {
+  defineComponent,
+  nextTick,
+  onMounted,
+  reactive,
+  ref,
+  Ref,
+  computed
+} from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from '@/store'
 export default defineComponent({
   name: 'Login',
   setup() {
+    const route = useRoute()
     const router = useRouter()
     const store = useStore()
 
@@ -78,8 +87,19 @@ export default defineComponent({
     const tips = ref('')
     const loading = ref(false)
     const passwordType = ref('password')
-    const redirect = ref(undefined)
-
+    const redirect: Ref<string> = computed(
+      () => route.query && (route.query.redirect as string)
+    )
+    const redirectQuery = computed(
+      () =>
+        route.query &&
+        Object.keys(route.query).reduce((acc: any, cur: string) => {
+          if (cur !== 'redirect') {
+            acc[cur] = route.query[cur]
+          }
+          return acc
+        }, {}) // FIXME Dictionary<string>
+    )
     const loginForm = reactive({ username: '', password: '' })
     onMounted(() => {
       loginForm.username = 'admin'
@@ -114,7 +134,10 @@ export default defineComponent({
             store
               .dispatch('user/login', loginForm)
               .then(() => {
-                router.push({ path: redirect.value || '/' })
+                router.push({
+                  path: redirect.value || '/',
+                  query: redirectQuery.value
+                })
                 loading.value = false
               })
               .catch(() => {
