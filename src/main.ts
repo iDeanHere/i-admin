@@ -14,6 +14,8 @@ import '@/styles/global.scss'
 import IconSvg from '@/components/IconSvg/index.vue'
 import '@/icons'
 
+import '../mock'
+
 createApp(App)
   .use(store, key)
   .use(router)

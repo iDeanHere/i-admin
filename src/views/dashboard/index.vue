@@ -2,13 +2,15 @@
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
     <div class="dashboard-text">
-      roles: [<span v-for="role in roles" :key="role">{{ role }},</span>]
+      roles: <span>{{ roles }}</span>
     </div>
+    <div class="dashboard-text">email: {{ email }}</div>
+    <div class="dashboard-text">introduction: {{ intro }}</div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, onMounted } from 'vue'
 import { useStore } from '@/store'
 export default defineComponent({
   name: 'Dashboard',
@@ -16,9 +18,13 @@ export default defineComponent({
     const store = useStore()
     const name = computed(() => store.getters.username)
     const roles = computed(() => store.getters.roles)
+    const email = computed(() => store.getters.email)
+    const intro = computed(() => store.getters.intro)
     return {
       name,
-      roles
+      roles,
+      email,
+      intro
     }
   }
 })
