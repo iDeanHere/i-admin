@@ -1,29 +1,14 @@
 import Mock from 'mockjs'
+import user from './data/user'
 
-Mock.mock(process.env.VUE_APP_BASE_API_URI + '/login', 'post', {
-  code: 20000,
-  msg: 'Hello from MockJS',
-  data: {
-    token: '@guid'
+export const mocks = [...user]
+
+export const mockXHR = () => {
+  for (const i of mocks) {
+    Mock.mock(
+      new RegExp(`${process.env.VUE_APP_BASE_API_URI}${i.url}`),
+      i.type || 'get',
+      i.template
+    )
   }
-})
-
-Mock.mock('/api/dev/logout', 'post', {
-  code: 20000,
-  msg: 'Hello from MockJS',
-  data: {}
-})
-
-Mock.mock(new RegExp('/api/dev/user/*'), 'get', {
-  code: 20000,
-  msg: 'Hello from MockJS',
-  data: {
-    username: '@FIRST',
-    avatar: '@image("80x80", "#66ccee", "#fff", "avatar")',
-    intro: 'About me.',
-    email: '@email',
-    roles: '@pick(["admin", "editor"])' // ['admin', 'editor']
-  }
-})
-
-export default Mock
+}

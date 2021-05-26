@@ -38,11 +38,11 @@ module.exports = {
     https: false,
     hotOnly: true,
     proxy: {
-      '/api/dev': {
+      [process.env.VUE_APP_BASE_API_URI]: {
         target: 'http://localhost:8088',
         changeOrigin: true,
         pathRewrite: {
-          '^/api/dev': ''
+          ['^' + process.env.VUE_APP_BASE_API_URI]: ''
         }
       }
     }

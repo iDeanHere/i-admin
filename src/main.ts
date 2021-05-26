@@ -14,7 +14,11 @@ import '@/styles/global.scss'
 import IconSvg from '@/components/IconSvg/index.vue'
 import '@/icons'
 
-import '../mock'
+import { mockXHR } from '../mock'
+
+if (process.env.NODE_ENV === 'development') {
+  mockXHR()
+}
 
 createApp(App)
   .use(store, key)
