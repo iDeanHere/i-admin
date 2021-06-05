@@ -37,14 +37,15 @@ module.exports = {
     port: 8080,
     https: false,
     hotOnly: true,
-    proxy: {
-      [process.env.VUE_APP_BASE_API_URI]: {
-        target: 'http://localhost:8088',
-        changeOrigin: true,
-        pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API_URI]: ''
-        }
-      }
-    }
+    // proxy: {
+    //   [process.env.VUE_APP_BASE_API_URI]: {
+    //     target: 'http://localhost:8088',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       ['^' + process.env.VUE_APP_BASE_API_URI]: ''
+    //     }
+    //   }
+    // },
+    before: require('./mock/server/index.ts')
   }
 }

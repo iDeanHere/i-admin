@@ -17,7 +17,7 @@ import '@/icons'
 import { mockXHR } from '../mock'
 
 if (process.env.NODE_ENV === 'development') {
-  mockXHR()
+  // mockXHR()
 }
 
 createApp(App)
