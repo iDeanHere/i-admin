@@ -26,6 +26,70 @@ const routes: Array<RouteRecordRaw> = [
     ]
   },
   {
+    path: '/nested-menu',
+    name: 'Nested Menu',
+    component: Layout,
+    redirect: '/nested-menu/menu-master',
+    meta: { title: 'Nested Menu', icon: 'nested' },
+    children: [
+      {
+        path: 'menu-master',
+        name: 'Menu Master',
+        component: () => import('@/views/nested-menu/menu-master/index.vue'),
+        meta: { title: 'Menu Master' },
+        children: [
+          {
+            path: 'alpha',
+            name: 'Master(alpha)',
+            component: () =>
+              import('@/views/nested-menu/menu-master/alpha/index.vue'),
+            meta: { title: 'Menu Master(alpha)' }
+          },
+          {
+            path: 'beta',
+            name: 'Master(beta)',
+            component: () =>
+              import('@/views/nested-menu/menu-master/beta/index.vue'),
+            meta: { title: 'Menu Master(beta)' },
+            children: [
+              {
+                path: '1',
+                name: 'beta-1',
+                component: () =>
+                  import(
+                    '@/views/nested-menu/menu-master/beta/beta-1/index.vue'
+                  ),
+                meta: { title: 'beta-1' }
+              },
+              {
+                path: '2',
+                name: 'beta-2',
+                component: () =>
+                  import(
+                    '@/views/nested-menu/menu-master/beta/beta-2/index.vue'
+                  ),
+                meta: { title: 'beta-2' }
+              }
+            ]
+          },
+          {
+            path: 'gamma',
+            name: 'Master(gamma)',
+            component: () =>
+              import('@/views/nested-menu/menu-master/gamma/index.vue'),
+            meta: { title: 'Menu Master(gamma)' }
+          }
+        ]
+      },
+      {
+        path: 'menu-slave',
+        name: 'Menu Slave',
+        component: () => import('@/views/nested-menu/menu-slave/index.vue'),
+        meta: { title: 'Menu Slave' }
+      }
+    ]
+  },
+  {
     path: '/about',
     component: Layout,
     children: [

@@ -44,6 +44,28 @@
       background-color: $menuItemHoverBgColor !important;
     }
   }
+
+  .submenu-title-noDropdown,
+  .el-submenu__title {
+    &:hover {
+      background-color: $menuItemHoverBgColor !important;
+    }
+  }
+
+  .is-active > .el-submenu__title {
+    color: $subMenuActiveTextColor !important;
+  }
+
+  & .nest-menu .el-submenu > .el-submenu__title,
+  & .el-submenu .el-menu-item {
+    min-width: $sidebarWidth !important;
+    background-color: $subMenuBgColor !important;
+    // color: $menuTextColor;
+
+    &:hover {
+      background-color: $subMenuItemHoverBgColor !important;
+    }
+  }
 }
 
 .hide-sidebar {
@@ -53,6 +75,98 @@
 
   .sidebar-container {
     width: $hiddenSidebarWidth !important;
+  }
+
+  .submenu-title-noDropdown {
+    padding: 0 !important;
+    position: relative;
+
+    .el-tooptip {
+      padding: 0 !important;
+      .icon-svg {
+        margin-left: 20px;
+      }
+      .sub-el-icon {
+        margin-left: 19px;
+      }
+    }
+  }
+  .el-submenu {
+    overflow: hidden;
+
+    & > .el-submenu__title {
+      padding: 0 !important;
+
+      .icon-svg {
+        margin-left: 20px;
+      }
+
+      .sub-el-icon {
+        margin-left: 19px;
+      }
+
+      .el-submenu__icon-arrow {
+        display: none;
+      }
+    }
+  }
+
+  .el-menu--collapse {
+    .el-submenu {
+      & > .el-submenu__title {
+        & > span {
+          height: 0;
+          width: 0;
+          overflow: hidden;
+          visibility: hidden;
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+.el-menu--collapse .el-menu .el-submenu {
+  min-width: $sidebarWidth !important;
+}
+
+// when menu collapsed
+.el-menu--vertical {
+  & > .el-menu {
+    .icon-svg {
+      margin-right: 16px;
+    }
+    .sub-el-icon {
+      margin-right: 12px;
+      margin-left: -2px;
+    }
+  }
+
+  .nest-menu .el-submenu > .el-submenu__title,
+  .el-menu-item {
+    &:hover {
+      // you can use $subMenuHover
+      background-color: $subMenuItemHoverBgColor !important;
+    }
+  }
+
+  // the scroll bar appears when the subMenu is too long
+  > .el-menu--popup {
+    max-height: 100vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar-track-piece {
+      background: #d3dce6;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #99a9bf;
+      border-radius: 20px;
+    }
   }
 }
 
