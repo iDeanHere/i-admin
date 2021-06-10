@@ -105,8 +105,6 @@ export default defineComponent({
       return false
     }
     function resolvePath(routePath: string) {
-      console.log(basePath.value)
-
       return path.resolve(basePath.value, routePath)
     }
     return {

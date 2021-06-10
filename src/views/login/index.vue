@@ -146,7 +146,6 @@ export default defineComponent({
           }, 2500)
         } else {
           tips.value = 'login validate error'
-          console.log(tips.value)
           return false
         }
       })
